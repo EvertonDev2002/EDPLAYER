@@ -125,7 +125,7 @@ export default function Add() {
           history.push("/");
         })
         .catch((response) => {
-          console.log(response);
+          alert("Erro ao adicionar! Tente novamente ou contate o desenvolvedor.")
           
         });
     }

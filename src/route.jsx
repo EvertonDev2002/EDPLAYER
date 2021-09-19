@@ -1,6 +1,6 @@
 import App from "./Page/app.jsx";
 import Add from "./Page/add.jsx";
-import { BrowserRouter as Router, Switch, Route} from "react-router-dom"
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 export default function Routes() {
   return (
     <Router>

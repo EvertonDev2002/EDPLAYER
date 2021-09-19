@@ -14,6 +14,7 @@
   text-decoration: none;
   box-sizing: border-box;
 }
+
 :root {
   /* Cores de campos, bordas e linhas */
   --background: #1a1a1b;
@@ -38,7 +39,6 @@
   height: 100vh;
   display: flex;
   align-items: center;
-  flex-direction: column;
 }
 .background {
   width: 100vw;
@@ -46,21 +46,18 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: var(--color1);
+  background-color: var(--background);
 }
 .background > img {
   width: 100%;
   height: 100%;
-  border: none;
-  outline: none;
-  filter: contrast(1.5) brightness(0.7) blur(0.3em) grayscale(0.26);
   background-repeat: no-repeat;
+  filter: contrast(1.5) brightness(0.7) blur(0.3em) grayscale(0.26);
 }
 .Playlist {
   right: 0;
   width: 45%;
-  height: 90%;
-  transition: all 2s;
+  height: 100%;
   position: absolute;
   background-color: var(--background);
 }
@@ -72,16 +69,16 @@
   height: auto;
   display: flex;
   padding-top: 0.7em;
-  padding-bottom: 0.7em;
   align-items: center;
   border-radius: 0.7em;
+  padding-bottom: 0.7em;
   justify-content: center;
 }
 .Playlist > .input > input {
   width: 80%;
   height: 2em;
-  padding-left: 0.2em;
   font-size: 1rem;
+  padding-left: 0.2em;
   border-radius: 0.5em;
   color: var(--input-font-color);
   background-color: var(--bg-color-input);
@@ -91,8 +88,8 @@
   padding: 0.1em;
   font-size: 1rem;
   font-style: italic;
-  color: var(--input-font-color);
   font-weight: lighter;
+  color: var(--input-font-color);
   font-family: var(--Fira-Sans-Condensed);
 }
 .Playlist > .list {
@@ -153,13 +150,14 @@
 }
 .Sound > .title {
   display: flex;
+  text-align: center;
   white-space: nowrap;
 }
 .Sound > .title > p {
   cursor: default;
   font-weight: bold;
-  color: var(--font-color);
   margin-right: 0.8em;
+  color: var(--font-color);
   font-family: var(--Heebo);
 }
 .Sound > .Controls {
@@ -201,16 +199,16 @@
   -webkit-appearance: none;
   background-color: var(--font-color);
 }
-.form{
+.form {
   width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
-  justify-content: center;
   flex-direction: column;
+  justify-content: center;
   background-color: var(--background);
 }
-.form > input{
+.form > input {
   width: 80%;
   height: 2em;
   margin: 1em;
@@ -220,7 +218,6 @@
   color: var(--input-font-color);
   background-color: var(--bg-color-input);
   font-family: var(--Fira-Sans-Condensed);
-
 }
 .form > input::placeholder {
   padding: 0.1em;
@@ -230,19 +227,68 @@
   color: var(--input-font-color);
   font-family: var(--Fira-Sans-Condensed);
 }
-.form > legend{
+.form > legend {
   font-size: 2rem;
   cursor: default;
   margin-bottom: 1em;
+  text-align: center;
   font-weight: bolder;
   color: var(--font-color);
   font-family: var(--Heebo);
 }
-.form > button{
+.form > button {
   padding: 0.3em;
   cursor: pointer;
   font-size: 1rem;
   border-radius: 0.5em;
   font-family: var(--Heebo);
   color: var(--input-font-color);
+}
+@media screen and (max-width: 800px) {
+  .background {
+    display: none;
+  }
+  .Playlist {
+    position: static;
+    width: 100%;
+  }
+  .Playlist > .list > .track > p {
+    font-size: 0.9rem;
+  }
+  .Playlist > .list > .legend {
+    font-size: 0.9rem;
+  }
+  .Playlist > .input > input {
+    height: 1.8em;
+    font-size: 0.8rem;
+  }
+  .Playlist > .input > input::placeholder {
+    font-size: 0.8rem;
+  }
+
+  .Sound {
+    height: 15%;
+    display: flex;
+    flex-direction: column;
+    border-top: solid 1px var(--border-color);
+  }
+  .Sound > .title > p {
+    font-size: 1rem;
+  }
+  .Controls > .icon {
+    font-size: 0.6em;
+  }
+  .form > legend {
+    font-size: 1.3rem;
+  }
+  .form > input {
+    height: 1.8em;
+    font-size: 0.8rem;
+  }
+  .form > input::placeholder {
+    font-size: 0.8rem;
+  }
+  .form > button {
+    font-size: 0.8rem;
+  }
 }

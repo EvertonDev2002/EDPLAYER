@@ -6,13 +6,7 @@ import Cover from "../Components/Cover/cover.jsx";
 import Controls from "../Components/Controls/controls.jsx";
 import Playlist from "../Components/Playlist/playlist.jsx";
 import Background from "../Components/Background/background.jsx";
-const invs = {
-  albumcover: "",
-  author: "",
-  sound: "",
-  time: "",
-  title: "",
-};
+
 export default function Add() {
   const history = useHistory();
   const [data, setData] = useState([]);
@@ -22,7 +16,6 @@ export default function Add() {
   const [hideShow, setHideShow] = useState("");
   const [iconPlay, setIconPlay] = useState("fas fa-play");
   const [iconVolume, setIconVolume] = useState("fas fa-volume-up");
-  const [valeus, setValeus] = useState(invs);
 
   function PlayPause() {
     const audio = document.querySelector("#play");
@@ -35,7 +28,7 @@ export default function Add() {
       audio.play();
       setPlay(true);
       setIconPlay("fas fa-pause");
-      setTotal(sessionStorage.getItem("total"))
+      setTotal(sessionStorage.getItem("total"));
     }
   }
   function Next() {
@@ -99,15 +92,6 @@ export default function Add() {
 
   function Valeus(param) {
     const { name, value } = param.target;
-    const audio = document.querySelector("#play");
-    const inv = {
-      albumcover: "",
-      author: "",
-      sound: "",
-      time: "",
-      title: "",
-    };
-
     if (name === "title") {
       sessionStorage.setItem("title", value);
     }
@@ -119,29 +103,32 @@ export default function Add() {
     }
     if (name === "sound") {
       sessionStorage.setItem("sound", value);
-      setTimeout(Postpush, 1000);
-    }
-
-    function Postpush() {
-      inv.title = sessionStorage.getItem("title");
-      inv.albumcover = sessionStorage.getItem("albumcover");
-      inv.author = sessionStorage.getItem("author");
-      inv.sound = sessionStorage.getItem("sound");
-      inv.time = audio.duration;
-      setValeus(inv);
     }
     setData({ ...data, [name]: value });
   }
 
-  function OnSumit(param) {
-    param.preventDefault();
-    API.post("/add", valeus)
-      .then((response) => {
-        history.push("/");
-      })
-      .catch((response) => {
-        console.log(response);
-      });
+  function OnSumit(ev) {
+    ev.preventDefault();
+    setTimeout(Postpush, 1000);
+    const audio = document.querySelector("#play");
+    function Postpush() {
+      API.post(
+        `/AddSound?albumcover=${sessionStorage.getItem(
+          "albumcover"
+        )}&author=${sessionStorage.getItem(
+          "author"
+        )}&sound=${sessionStorage.getItem("sound")}&time=${
+          audio.duration
+        }&title=${sessionStorage.getItem("title")}`
+      )
+        .then((response) => {
+          history.push("/");
+        })
+        .catch((response) => {
+          console.log(response);
+          
+        });
+    }
   }
 
   return (

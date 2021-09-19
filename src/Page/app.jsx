@@ -10,7 +10,7 @@ import ListTrack from "../Components/ListTrack/listtrack.jsx";
 import Background from "../Components/Background/background.jsx";
 
 export default function App() {
-  const history = useHistory()
+  const history = useHistory();
   const [data, setData] = useState("");
   const [total, setTotal] = useState(0);
   const [search, setSearch] = useState(1);
@@ -32,8 +32,10 @@ export default function App() {
       setPlay(true);
       setIconPlay("fas fa-pause");
       AutoPlaySound(search + 1);
+      setTotal(sessionStorage.getItem("total"));
     }
   }
+  
   function Next() {
     const audio = document.querySelector("#play");
     const p = document.querySelector(".p");
@@ -87,24 +89,24 @@ export default function App() {
     }
   }
 
-  function SelectTrack(v) {
+  function SelectTrack(ev) {
     const p = document.querySelector(".p");
     const audio = document.querySelector("#play");
-    const track = document.querySelector(`#e${v}`).id;
-    if (track === `e${v}` && v === 1) {
+    const track = document.querySelector(`#e${ev}`).id;
+    if (track === `e${ev}` && ev === 1) {
       setSearch(1);
       audio.autoplay = true;
       audio.load();
       p.classList.remove("fa-play");
       p.classList.add("fa-pause");
-      AutoPlaySound(v + 1);
-    } else if (track === `e${v}`) {
-      setSearch(v);
+      AutoPlaySound(ev + 1);
+    } else if (track === `e${ev}`) {
+      setSearch(ev);
       audio.autoplay = true;
       audio.load();
       p.classList.remove("fa-play");
       p.classList.add("fa-pause");
-      AutoPlaySound(v + 1);
+      AutoPlaySound(ev + 1);
     }
   }
 
@@ -125,32 +127,33 @@ export default function App() {
     });
   }
 
-  function AutoPlaySound(param) {
+  function AutoPlaySound(ev) {
     const audio = document.querySelector("#play");
     const Interval = setInterval(ChangeDuration, 10);
 
     function ChangeDuration() {
       if (audio.duration === audio.currentTime) {
-        setSearch(param);
+        setSearch(ev);
         clearInterval(Interval);
       }
     }
   }
 
-  function ModelDuration(param) {
+  function ModelDuration(ev) {
     const data = new Date(null);
-    data.setMinutes(param);
+    data.setMinutes(ev);
     const DurationInMinutes = data.toISOString().substr(11, 5);
     return DurationInMinutes;
   }
 
-  function House(){
-    history.push("/")
+  function House() {
+    history.push("/");
   }
 
-  function Add(){
-    history.push("/add")
+  function Add() {
+    history.push("/add");
   }
+
   useEffect(() => {
     API.get(`/${search}`).then((response) => {
       setData(response.data);
@@ -159,9 +162,8 @@ export default function App() {
 
   useEffect(() => {
     API.get().then((response) => {
-      setPlaylist(response.data.content);
-      sessionStorage.setItem("total", response.data.content.length)
-      setTotal(sessionStorage.getItem("total"));
+      setPlaylist(response.data);
+      sessionStorage.setItem("total", response.data.length);
     });
   }, [search]);
   return (

@@ -16,12 +16,18 @@
 }
 :root {
   /* Cores de campos, bordas e linhas */
-  --color1: #ededed;
-  --color2: #b0e0ea;
-  --color3: #f4a62c;
-  --color4: #f5b142;
-  --color5: #f5cf82;
-  --color6: #f5cf8271;
+  --background: #1a1a1b;
+  --background_: #2e2e2f;
+  --font-color: rgb(233, 234, 236);
+  --input-font-color: rgb(56, 58, 58);
+  --bg-color-input: rgb(236, 232, 232);
+  --border-color: rgba(195, 215, 251, 0.39);
+  --hover-color: linear-gradient(
+    118deg,
+    rgba(195, 215, 251, 0.39) 0%,
+    rgba(117, 236, 245, 0.239) 41%,
+    rgba(165, 196, 231, 0.239) 100%
+  );
 
   /* Fontes */
   --Heebo: "Heebo", sans-serif;
@@ -39,102 +45,121 @@
   height: 100vh;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   background-color: var(--color1);
 }
-.background > .Playlist {
-  right: 0;
-  width: 25%;
-  height: 100vh;
-  position: absolute;
-  border-top-left-radius: 1em;
-  background-color: var(--color2);
-  border-bottom-left-radius: 1em;
+.background > img {
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  filter: contrast(1.5) brightness(0.7) blur(0.3em) grayscale(0.26);
+  background-repeat: no-repeat;
 }
-.background > .hide {
+.Playlist {
+  right: 0;
+  width: 45%;
+  height: 90%;
+  transition: all 2s;
+  position: absolute;
+  background-color: var(--background);
+}
+.hide {
   display: none;
 }
-.background > .Playlist > .input {
+.Playlist > .input {
+  width: 100%;
+  height: auto;
   display: flex;
-  padding: 0.5em;
+  padding-top: 0.7em;
+  padding-bottom: 0.7em;
   align-items: center;
+  border-radius: 0.7em;
   justify-content: center;
 }
-.background > .Playlist > .input > input {
-  width: 90%;
-  padding: 0.4em;
+.Playlist > .input > input {
+  width: 80%;
+  height: 2em;
+  padding-left: 0.2em;
   font-size: 1rem;
-  color: var(--color4);
-  border-radius: 0.7em;
+  border-radius: 0.5em;
+  color: var(--input-font-color);
+  background-color: var(--bg-color-input);
   font-family: var(--Fira-Sans-Condensed);
 }
-.background > .Playlist > .input > input::placeholder {
+.Playlist > .input > input::placeholder {
   padding: 0.1em;
   font-size: 1rem;
   font-style: italic;
-  color: var(--color4);
+  color: var(--input-font-color);
   font-weight: lighter;
   font-family: var(--Fira-Sans-Condensed);
 }
-.background > .Playlist > .list {
+.Playlist > .list {
   width: 100%;
-  height: 90%;
+  height: auto;
   overflow: auto;
 }
-.background > .Playlist > .list > .legend {
+.Playlist > .list > .legend {
   cursor: default;
   font-size: 1rem;
   font-weight: 500;
   font-style: normal;
   padding-left: 0.3em;
-  color: var(--color3);
+  color: var(--font-color);
   font-family: var(--Heebo);
 }
-.background > .Playlist > .list > .track {
+.Playlist > .list > .track {
   display: flex;
-  padding: 0.2em;
+  padding: 0.3em;
   cursor: pointer;
   flex-direction: row;
   justify-content: space-between;
-  border-top: solid 1px var(--color5);
+  border-top: solid 1px var(--border-color);
 }
-.background > .Playlist > .list > .track:hover {
-  background-color: var(--color6);
+.Playlist > .list > .track:hover {
+  background-image: var(--hover-color);
 }
-.background > .Playlist > .list > .track > p {
-  font-size: 1.2rem;
+.Playlist > .list > .track > p {
+  font-size: 1rem;
   padding-left: 0.3em;
-  color: var(--color4);
+  color: var(--font-color);
+  font-family: var(--Fira-Sans-Condensed);
 }
-.background > .Cover {
+.Cover {
   display: flex;
+  margin-left: 2em;
   margin-bottom: 4em;
+  position: absolute;
   align-items: center;
   justify-content: center;
 }
-.background > .Cover > img {
-  width: 14em;
-  height: 12em;
+.Cover > img {
+  width: 20em;
+  height: 15em;
   border-radius: 0.7em;
 }
 .Sound {
   bottom: 0;
-  width: 40%;
+  width: 100%;
   height: 10%;
   display: flex;
   padding: 0.8em;
   position: fixed;
   flex-direction: row;
   align-items: center;
-  border-top-left-radius: 0.7em;
-  border-top-right-radius: 0.7em;
   justify-content: space-between;
-  background-color: var(--color2);
+  background-color: var(--background);
+}
+.Sound > .title {
+  display: flex;
+  white-space: nowrap;
 }
 .Sound > .title > p {
   cursor: default;
   font-weight: bold;
-  color: var(--color3);
+  color: var(--font-color);
+  margin-right: 0.8em;
   font-family: var(--Heebo);
 }
 .Sound > .Controls {
@@ -145,7 +170,7 @@
   margin: 0.4em;
   cursor: pointer;
   font-size: 0.7em;
-  color: var(--color3);
+  color: var(--font-color);
 }
 .Controls > .spanInput {
   display: flex;
@@ -158,26 +183,66 @@
 }
 .Controls > .spanInput > input[type="range"]::-webkit-slider-thumb {
   /* Bolinha da Barra */
-  width: 0.4em;
+  width: 0.3em;
   border: none;
-  height: 0.4em;
+  height: 0.3em;
   cursor: pointer;
   margin-top: -0.1em;
   border-radius: 100%;
   vertical-align: middle;
   -webkit-appearance: none;
-  background-color: var(--color3);
+  background-color: var(--font-color);
 }
 .Controls > .spanInput > input[type="range"]::-webkit-slider-runnable-track {
-  border: none;
-  height: 0.2em;
+  height: 0.1em;
   cursor: pointer;
   appearance: none;
-  border-radius: 0.7em;
   vertical-align: middle;
   -webkit-appearance: none;
-  background-color: var(--color5);
+  background-color: var(--font-color);
 }
-.Controls > .spanInput > input[type="range"]::-webkit-slider-thumb:hover {
-  background-color: var(--color4);
+.form{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: var(--background);
+}
+.form > input{
+  width: 80%;
+  height: 2em;
+  margin: 1em;
+  font-size: 1rem;
+  padding-left: 0.2em;
+  border-radius: 0.5em;
+  color: var(--input-font-color);
+  background-color: var(--bg-color-input);
+  font-family: var(--Fira-Sans-Condensed);
+
+}
+.form > input::placeholder {
+  padding: 0.1em;
+  font-size: 1rem;
+  font-style: italic;
+  font-weight: lighter;
+  color: var(--input-font-color);
+  font-family: var(--Fira-Sans-Condensed);
+}
+.form > legend{
+  font-size: 2rem;
+  cursor: default;
+  margin-bottom: 1em;
+  font-weight: bolder;
+  color: var(--font-color);
+  font-family: var(--Heebo);
+}
+.form > button{
+  padding: 0.3em;
+  cursor: pointer;
+  font-size: 1rem;
+  border-radius: 0.5em;
+  font-family: var(--Heebo);
+  color: var(--input-font-color);
 }

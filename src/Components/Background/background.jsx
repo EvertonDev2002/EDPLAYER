@@ -1,3 +1,8 @@
 export default function Background(props) {
-  return <div className="background">{props.children}</div>;
+  return (
+    <div className="background">
+      <img src={props.bg} alt="background" />
+      {props.children}
+    </div>
+  );
 }

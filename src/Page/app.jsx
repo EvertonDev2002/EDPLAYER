@@ -11,7 +11,7 @@ import Background from "../Components/Background/background.jsx";
 
 export default function App() {
   const history = useHistory();
-  const [data, setData] = useState("");
+  const [datas, setDatas] = useState("");
   const [total, setTotal] = useState(0);
   const [search, setSearch] = useState(1);
   const [play, setPlay] = useState(false);
@@ -19,8 +19,7 @@ export default function App() {
   const [playlist, setPlaylist] = useState([]);
   const [iconPlay, setIconPlay] = useState("fas fa-play");
   const [iconVolume, setIconVolume] = useState("fas fa-volume-up");
-
-  function PlayPause() {
+  const PlayPause = () => {
     const audio = document.querySelector("#play");
 
     if (play) {
@@ -31,12 +30,11 @@ export default function App() {
       audio.play();
       setPlay(true);
       setIconPlay("fas fa-pause");
-      AutoPlaySound(search + 1);
       setTotal(sessionStorage.getItem("total"));
     }
-  }
-  
-  function Next() {
+  };
+
+  const Next = () => {
     const audio = document.querySelector("#play");
     const p = document.querySelector(".p");
     if (search <= total) {
@@ -50,23 +48,17 @@ export default function App() {
         audio.load();
         p.classList.remove("fa-play");
         p.classList.add("fa-pause");
-        AutoPlaySound(search + 1);
       }
     }
-  }
+  };
 
-  function Prev() {
-    const audio = document.querySelector("#play");
-
+  const Prev = () => {
     if (search !== 1) {
       setSearch(search - 1);
-      audio.autoplay = true;
-      audio.load();
-      AutoPlaySound(search + 1);
     }
-  }
+  };
 
-  function Volume() {
+  const Volume = () => {
     const audio = document.querySelector("#play");
     const input = document.querySelector("#input").value;
     audio.volume = input;
@@ -77,9 +69,9 @@ export default function App() {
     } else {
       setIconVolume("fas fa-volume-mute");
     }
-  }
+  };
 
-  function HidePlaylist() {
+  const HidePlaylist = () => {
     if (localStorage.getItem("list") === "hide") {
       localStorage.removeItem("list");
       setHideShow("");
@@ -87,9 +79,9 @@ export default function App() {
       localStorage.setItem("list", "hide");
       setHideShow(localStorage.getItem("list"));
     }
-  }
+  };
 
-  function SelectTrack(ev) {
+  const SelectTrack = (ev) => {
     const p = document.querySelector(".p");
     const audio = document.querySelector("#play");
     const track = document.querySelector(`#e${ev}`).id;
@@ -99,66 +91,68 @@ export default function App() {
       audio.load();
       p.classList.remove("fa-play");
       p.classList.add("fa-pause");
-      AutoPlaySound(ev + 1);
     } else if (track === `e${ev}`) {
       setSearch(ev);
       audio.autoplay = true;
       audio.load();
       p.classList.remove("fa-play");
       p.classList.add("fa-pause");
-      AutoPlaySound(ev + 1);
     }
-  }
+  };
 
-  function Search_() {
+  const Search_ = () => {
     const p = document.querySelector(".p");
-    const audio = document.querySelector("#play");
     const search = document.querySelector("#search").value;
     // eslint-disable-next-line
     playlist.map((list) => {
       if (list.title === search) {
         setSearch(list.id);
-        audio.autoplay = true;
-        audio.load();
         p.classList.remove("fa-play");
         p.classList.add("fa-pause");
-        AutoPlaySound(list.id + 1);
       }
     });
-  }
+  };
 
-  function AutoPlaySound(ev) {
-    const audio = document.querySelector("#play");
-    const Interval = setInterval(ChangeDuration, 10);
-
-    function ChangeDuration() {
-      if (audio.duration === audio.currentTime) {
-        setSearch(ev);
-        clearInterval(Interval);
-      }
-    }
-  }
-
-  function ModelDuration(ev) {
+  const ModelDuration = (ev) => {
     const data = new Date(null);
     data.setMinutes(ev);
     const DurationInMinutes = data.toISOString().substr(11, 5);
     return DurationInMinutes;
-  }
+  };
 
-  function House() {
+  const House = () => {
     history.push("/");
-  }
+  };
 
-  function Add() {
+  const Add = () => {
     history.push("/add");
-  }
+  };
 
   useEffect(() => {
+    const audio = document.querySelector("#play");
+    const Interval = setInterval(ChangeDuration, 10);
+    function ChangeDuration() {
+      if (audio.duration === audio.currentTime) {
+        if (search === total -1) {
+          setSearch(1);
+          audio.autoplay = true;
+          audio.load();
+          clearInterval(Interval);
+          console.log("primeira")
+        } else {
+          setSearch(search + 1);
+          audio.autoplay = true;
+          audio.load();
+          clearInterval(Interval);
+          console.log(search)
+        }
+      }
+    }
     API.get(`/${search}`).then((response) => {
-      setData(response.data);
+      setDatas(response.data);
+      document.title = `EdPlayer|${response.data.title}`;
     });
-  }, [search]);
+  }, [search, total]);
 
   useEffect(() => {
     API.get().then((response) => {
@@ -168,23 +162,23 @@ export default function App() {
   }, [search]);
   return (
     <>
-      <Background bg={data.albumcover}>
-        <Cover photo={data.albumcover} />
+      <Background bg={datas.albumcover}>
+        <Cover photo={datas.albumcover} />
+        <Playlist class={hideShow}>
+          <Search search={Search_} />
+          <ListTrack>
+            {playlist?.map((list) => (
+              <Track
+                key={list.id}
+                id={list.id}
+                title={list.title}
+                duration={ModelDuration(list.time)}
+                select={SelectTrack}
+              />
+            ))}
+          </ListTrack>
+        </Playlist>
       </Background>
-      <Playlist class={hideShow}>
-        <Search search={Search_} />
-        <ListTrack>
-          {playlist?.map((list) => (
-            <Track
-              key={list.id}
-              id={list.id}
-              title={list.title}
-              duration={ModelDuration(list.time)}
-              select={SelectTrack}
-            />
-          ))}
-        </ListTrack>
-      </Playlist>
       <Controls
         iconv={iconVolume}
         iconp={iconPlay}
@@ -192,8 +186,8 @@ export default function App() {
         play={PlayPause}
         next={Next}
         prev={Prev}
-        title={data.title}
-        music={data.sound}
+        title={datas.title}
+        music={datas.sound}
         hide_show={HidePlaylist}
         house={House}
         add={Add}

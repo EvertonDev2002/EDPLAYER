@@ -19,8 +19,6 @@ export default function Controls(props) {
             onChange={props.volume}
           />
         </span>
-        {/*   <span className="icon fas fa-upload" onClick={props.add}></span> */}
-        <span className="icon fas fa-home" onClick={props.house}></span>
         <span className="icon fas fa-list-ul" onClick={props.hide_show}></span>
         <audio preload="metadata" id="play" src={props.music}></audio>
       </div>

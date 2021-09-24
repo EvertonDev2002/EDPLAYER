@@ -1,11 +1,11 @@
+import "./theme.css";
 import React from "react";
-import "./Theme/theme.css";
-import Route from "./route.jsx";
+import App from "./app.jsx";
 import ReactDOM from "react-dom";
 
 ReactDOM.render(
   <React.StrictMode>
-    <Route />
+    <App />
   </React.StrictMode>,
   document.querySelector("#root")
 );

@@ -1,6 +1,6 @@
 export default function Search(props) {
   return (
-    <div className="input">
+    <div className="search">
       <input
         type="text"
         onChange={() => props.search()}

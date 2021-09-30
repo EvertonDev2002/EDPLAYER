@@ -1,0 +1,343 @@
+@charset "UTF-8";
+
+@import url("https://fonts.googleapis.com/css2?family=Fira+Sans+Condensed:ital@0;1&family=Heebo:wght@400;500;700&display=swap");
+
+* {
+  margin: 0;
+  border: 0;
+  padding: 0;
+  outline: 0;
+  line-height: 1;
+  list-style: none;
+  box-shadow: none;
+  font-size: 1.4rem;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+/* Cores de campos, bordas e linhas */
+$background: #1a1a1b;
+$background_: #2e2e2f;
+$font-color: rgb(233, 234, 236);
+$input-font-color: rgb(56, 58, 58);
+$bg-color-input: rgb(236, 232, 232);
+$border-color: rgba(195, 215, 251, 0.39);
+$hover-color: linear-gradient(
+  118deg,
+  rgba(195, 215, 251, 0.39) 0%,
+  rgba(117, 236, 245, 0.239) 41%,
+  rgba(165, 196, 231, 0.239) 100%
+);
+
+/* Fontes */
+$Heebo: "Heebo", sans-serif;
+$Fira-Sans-Condensed: "Fira Sans Condensed", sans-serif;
+
+.container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: $background;
+  .background {
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: contrast(1.5) brightness(0.7) blur(0.3em) grayscale(0.26);
+  }
+}
+.albumcover {
+  width: 20em;
+  height: 15em;
+  margin-left: 4em;
+  position: absolute;
+  border-radius: 0.7em;
+  margin-bottom: 4.5em;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.playlist {
+  right: 0px;
+  width: 45%;
+  height: 100%;
+  position: fixed;
+  background-color: $background;
+  .search {
+    display: flex;
+    padding-top: 0.7em;
+    align-items: center;
+    padding-bottom: 0.7em;
+    justify-content: center;
+    input {
+      width: 80%;
+      height: 2em;
+      font-size: 1rem;
+      padding-left: 0.2em;
+      border-radius: 0.5em;
+      color: $input-font-color;
+      background-color: $bg-color-input;
+      font-family: $Fira-Sans-Condensed;
+      &::placeholder {
+        padding: 0.1em;
+        font-size: 1rem;
+        font-style: italic;
+        font-weight: lighter;
+        color: $input-font-color;
+        font-family: $Fira-Sans-Condensed;
+      }
+    }
+  }
+  .list {
+    .legend {
+      cursor: default;
+      font-size: 1rem;
+      font-weight: 500;
+      font-style: normal;
+      color: $font-color;
+      padding-left: 0.3em;
+      font-family: $Heebo;
+    }
+    .list-track {
+      height: 90vh;
+      overflow-y: auto;
+      &::-webkit-scrollbar-track-piece {
+        background-color: $background;
+      }
+      &::-webkit-scrollbar {
+        width: 0.2em;
+        height: 0.2em;
+      }
+      &::-webkit-scrollbar-thumb {
+        border-radius: 0.2em;
+        background: $hover-color;
+      }
+      .track {
+        display: flex;
+        height: 1.4em;
+        cursor: pointer;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        border-top: solid 1px $border-color;
+        &:last-child {
+          margin-bottom: 5em;
+        }
+        &:hover {
+          background-image: $hover-color;
+        }
+        p {
+          font-size: 1rem;
+          text-align: center;
+          color: $font-color;
+          white-space: nowrap;
+          padding-right: 0.4em;
+          font-family: $Fira-Sans-Condensed;
+        }
+        div {
+          display: flex;
+          padding-left: 0.2em;
+          flex-direction: row;
+          align-items: center;
+          .photo {
+            width: 1em;
+            height: 1em;
+            margin-right: 0.5em;
+            border-radius: 0.3em;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+          }
+        }
+      }
+    }
+  }
+}
+.hide {
+  display: none;
+}
+
+.sound {
+  bottom: 0;
+  z-index: 2;
+  width: 100%;
+  height: 10%;
+  display: flex;
+  padding: 0.8em;
+  position: fixed;
+  flex-direction: row;
+  align-items: center;
+  background-color: $background;
+  justify-content: space-between;
+  .title {
+    display: flex;
+    text-align: center;
+    white-space: nowrap;
+    p {
+      cursor: default;
+      font-weight: bold;
+      color: $font-color;
+      margin-right: 0.8em;
+      font-family: $Heebo;
+    }
+  }
+  .controls {
+    display: flex;
+    align-items: center;
+    .icon {
+      margin: 0.4em;
+      cursor: pointer;
+      font-size: 0.7em;
+      color: $font-color;
+    }
+    .spanInput {
+      display: flex;
+      align-items: center;
+      input[type="range"] {
+        width: 3em;
+        margin-left: 0.5em;
+        -webkit-appearance: none;
+        &::-webkit-slider-thumb {
+          /* Bolinha da Barra */
+          width: 0.3em;
+          border: none;
+          height: 0.3em;
+          cursor: pointer;
+          margin-top: -0.1em;
+          border-radius: 100%;
+          vertical-align: middle;
+          -webkit-appearance: none;
+          background-color: $font-color;
+        }
+        &::-webkit-slider-runnable-track {
+          height: 0.1em;
+          cursor: pointer;
+          appearance: none;
+          vertical-align: middle;
+          -webkit-appearance: none;
+          background-color: $font-color;
+        }
+      }
+    }
+  }
+}
+
+.form {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  background-color: $background;
+  input {
+    width: 80%;
+    height: 2em;
+    margin: 1em;
+    font-size: 1rem;
+    padding-left: 0.2em;
+    border-radius: 0.5em;
+    color: $input-font-color;
+    background-color: $bg-color-input;
+    font-family: $Fira-Sans-Condensed;
+    &::placeholder {
+      padding: 0.1em;
+      font-size: 1rem;
+      font-style: italic;
+      font-weight: lighter;
+      color: $input-font-color;
+      font-family: $Fira-Sans-Condensed;
+    }
+  }
+  legend {
+    font-size: 2rem;
+    cursor: default;
+    margin-bottom: 1em;
+    text-align: center;
+    color: $font-color;
+    font-weight: bolder;
+    font-family: $Heebo;
+  }
+  button {
+    padding: 0.3em;
+    cursor: pointer;
+    font-size: 1rem;
+    font-family: $Heebo;
+    border-radius: 0.5em;
+    color: $input-font-color;
+  }
+}
+@media screen and (max-width: 800px) {
+  .container {
+    justify-content: center;
+  }
+  .albumcover {
+    z-index: 0;
+    width: 8em;
+    height: 8em;
+    margin-left: 0;
+    position: absolute;
+  }
+  .playlist {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    .list {
+      .list-track {
+        height: 70vh;
+        .track {
+          p {
+            font-size: 0.9rem;
+          }
+        }
+      }
+      .legend {
+        font-size: 0.9rem;
+      }
+    }
+    .search {
+      input {
+        height: 1.8em;
+        font-size: 0.8rem;
+        &::placeholder {
+          font-size: 0.8rem;
+        }
+      }
+    }
+  }
+  .sound {
+    height: 15%;
+    display: flex;
+    flex-direction: column;
+    border-top: solid 1px $border-color;
+    .title {
+      p {
+        font-size: 1rem;
+      }
+    }
+    .controls {
+      .icon {
+        font-size: 0.6em;
+      }
+    }
+  }
+  .form {
+    legend {
+      font-size: 1.3rem;
+    }
+    input {
+      height: 1.8em;
+      font-size: 0.8rem;
+      &::placeholder {
+        font-size: 0.8rem;
+      }
+    }
+    button {
+      font-size: 0.8rem;
+    }
+  }
+}

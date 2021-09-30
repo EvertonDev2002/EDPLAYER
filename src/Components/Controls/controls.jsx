@@ -6,17 +6,17 @@ export default function Controls(props) {
       </div>
       <div className="controls">
         <span className="icon fas fa-step-backward" onClick={props.prev}></span>
-        <span className={`p icon ${props.iconp}`} onClick={props.play}></span>
+        <span className={`p icon fas fa-play`} onClick={props.play}></span>
         <span className="icon fas fa-step-forward" onClick={props.next}></span>
-        <span className={`spanInput icon ${props.iconv}`}>
+        <span className={`spanInput icon fas fa-volume-up`}>
           <input
             min="0"
             max="1"
             step="0.1"
             type="range"
-            id="input"
+            id="volume"
             defaultValue="1"
-            onChange={props.volume}
+            onChange={() => props.volume()}
           />
         </span>
         <span className="icon fas fa-list-ul" onClick={props.hide_show}></span>

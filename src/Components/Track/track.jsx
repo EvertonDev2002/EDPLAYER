@@ -5,7 +5,13 @@ export default function Track(props) {
       className="track"
       onClick={() => props.select(props.id)}
     >
-      <p>{props.title}</p>
+      <div>
+        <span
+          className="photo"
+          style={{ backgroundImage: `url(${props.photo})` }}
+        ></span>
+        <p>{props.title}</p>
+      </div>
       <p>{props.duration}</p>
     </div>
   );

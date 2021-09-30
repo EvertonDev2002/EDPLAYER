@@ -1,7 +1,10 @@
 export default function Background(props) {
   return (
     <div className="container">
-      <img src={props.bg} alt="background" />
+      <div
+        className="background"
+        style={{ backgroundImage: `url(${props.bg})` }}
+      ></div>
       {props.children}
     </div>
   );

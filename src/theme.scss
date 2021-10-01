@@ -136,6 +136,7 @@ $Fira-Sans-Condensed: "Fira Sans Condensed", sans-serif;
           color: $font-color;
           white-space: nowrap;
           padding-right: 0.4em;
+          text-overflow: ellipsis;
           font-family: $Fira-Sans-Condensed;
         }
         div {
@@ -194,8 +195,9 @@ $Fira-Sans-Condensed: "Fira Sans Condensed", sans-serif;
       font-size: 0.7em;
       color: $font-color;
     }
-    .spanInput {
+    .volume {
       display: flex;
+      flex-direction: row;
       align-items: center;
       input[type="range"] {
         width: 3em;
@@ -271,14 +273,47 @@ $Fira-Sans-Condensed: "Fira Sans Condensed", sans-serif;
     color: $input-font-color;
   }
 }
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 1365px) {
+  .albumcover {
+    width: 16em;
+    height: 16em;
+    margin-left: 3em;
+    position: absolute;
+  }
+}
+@media screen and (max-width: 1153px) {
+  .albumcover {
+    width: 14em;
+    height: 14em;
+    margin-left: 3em;
+    position: absolute;
+  }
+}
+
+@media screen and (max-width: 1033px) {
+  .albumcover {
+    width: 12em;
+    height: 12em;
+    margin-left: 3em;
+    position: absolute;
+  }
+}
+@media screen and (max-width: 999px) {
+  .albumcover {
+    width: 11em;
+    height: 11em;
+    margin-left: 3em;
+    position: absolute;
+  }
+}
+@media screen and (max-width: 809px) {
   .container {
     justify-content: center;
   }
   .albumcover {
     z-index: 0;
-    width: 8em;
-    height: 8em;
+    width: 9em;
+    height: 9em;
     margin-left: 0;
     position: absolute;
   }

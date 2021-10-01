@@ -1,3 +1,4 @@
+import { Tracks } from "./Audio/files.jsx";
 import { useEffect, useState } from "react";
 import Track from "./Components/Track/track.jsx";
 import Search from "./Components/Search/search.jsx";
@@ -6,7 +7,13 @@ import Playlist from "./Components/Playlist/playlist.jsx";
 import ListTrack from "./Components/ListTrack/listtrack.jsx";
 import Albumcover from "./Components/Albumcover/albumcover.jsx";
 import Background from "./Components/Background/background.jsx";
-import { audio, Tracks, playlist, ModelDuration } from "./audio.jsx";
+import {
+  audio,
+  playlist,
+  ModelDuration,
+  ChangeIconPlay,
+  Interval,
+} from "./audio.jsx";
 
 export default function App() {
   const [datas, setDatas] = useState([]);
@@ -42,14 +49,12 @@ export default function App() {
       }
     }
     const audio = document.querySelector("#play");
-    const Interval = setInterval(ChangeDuration, 10);
+    Interval(ChangeDuration);
     function ChangeDuration() {
       if (audio.duration === audio.currentTime) {
         if (parseInt(sessionStorage.getItem("search")) === Tracks.length) {
-          sessionStorage.setItem("search", 1);
-          audio.autoplay = true;
-          audio.load();
-          clearInterval(Interval);
+          ChangeIconPlay("remove");
+          Interval("clear");
         } else {
           sessionStorage.setItem(
             "search",
